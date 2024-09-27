@@ -7,7 +7,11 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.opsc7312_wickedtech.Models.LoginModel
+import com.example.opsc7312_wickedtech.Models.LoginResponse
 import com.example.opsc7312_wickedtech.R
+import com.example.opsc7312_wickedtech.RetrofitClient
+import retrofit2.Call
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var etUsername: EditText
@@ -35,15 +39,49 @@ class LoginActivity : AppCompatActivity() {
         }
 }
 
-    private fun loginUser(){
+    private fun loginUser() {
         val username = etUsername.text.toString().trim()
         val password = etPassword.text.toString().trim()
 
         // Validate input
-
-        if(username.isEmpty() || password.isEmpty()){
-            Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show()
+        if (username.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT)
+                .show()
             return
         }
+
+        val loginModel = LoginModel(username, password)
+
+        // Make the API call
+        RetrofitClient.apiService.loginUser(loginModel)
+            .enqueue(object : retrofit2.Callback<LoginResponse> {
+                override fun onResponse(
+                    call: Call<LoginResponse>,
+                    response: retrofit2.Response<LoginResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val token = response.body()?.token
+                        // Save token and proceed to next activity
+                        Toast.makeText(this@LoginActivity, "Login Successful", Toast.LENGTH_SHORT)
+                            .show()
+                        // Start next activity (e.g., MainActivity)
+                        // Save token in SharedPreferences or wherever you prefer
+                    } else {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Login Failed: ${response.message()}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "Network Error: ${t.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
     }
 }

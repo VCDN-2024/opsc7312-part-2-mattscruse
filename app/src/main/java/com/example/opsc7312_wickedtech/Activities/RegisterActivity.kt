@@ -6,7 +6,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.opsc7312_wickedtech.Models.RegisterModel
+import com.example.opsc7312_wickedtech.Models.RegisterResponse
 import com.example.opsc7312_wickedtech.R
+import com.example.opsc7312_wickedtech.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RegisterActivity: AppCompatActivity() {
     private lateinit var etUsername: EditText
@@ -30,30 +36,35 @@ class RegisterActivity: AppCompatActivity() {
             registerUser()
         }
 }
-    private fun registerUser(){
+    private fun registerUser() {
         val username = etUsername.text.toString().trim()
         val email = etEmail.text.toString().trim()
         val password = etPassword.text.toString().trim()
-        val confirmPassword = etConfirmPassword.text.toString().trim()
 
         // Validate input
-        if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             return
         }
 
-        if (password != confirmPassword) {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
-            return
-        }
-        // TODO: Implement actual registration logic here
-        // This is where you would typically make an API call to your backend server
-        // For now, we'll just show a success message
-        Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
+        val registerModel = RegisterModel(username, email, password)
 
-        // TODO: After successful registration, you might want to automatically log the user in
-        // and navigate to the main activity of your app
-        // For now, we'll just finish this activity, returning to the previous screen
-        finish()
+        // Make the API call
+        RetrofitClient.apiService.registerUser(registerModel).enqueue(object : Callback<RegisterResponse> {
+            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(this@RegisterActivity, "Registration Successful", Toast.LENGTH_SHORT).show()
+                    // Optionally, you can navigate to the login activity after successful registration
+                    // startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                    // finish()
+                } else {
+                    Toast.makeText(this@RegisterActivity, "Registration Failed: ${response.message()}", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                Toast.makeText(this@RegisterActivity, "Network Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

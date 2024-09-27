@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="action_FirstFragment_to_SecondFragment" type="id" />
+    <item name="imageView6" type="id" />
+    <item name="textView13" type="id" />
+    <item name="textView15" type="id" />
+    <item name="textView16" type="id" />
+    <item name="textView17" type="id" />
 </resources>

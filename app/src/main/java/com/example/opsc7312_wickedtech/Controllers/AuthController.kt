@@ -21,7 +21,7 @@ class AuthController(
     ) {
 
     @PostMapping("/register")
-    fun register(@RequestBody registrationRequest: RegistrationRequest): ResponseEntity<Any> {
+    fun register(@RequestBody registrationRequest: RegisterModel): ResponseEntity<Any> {
         return try {
             val user = User(
                 username = registrationRequest.username,
