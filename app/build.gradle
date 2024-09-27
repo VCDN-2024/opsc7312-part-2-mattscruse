@@ -1,25 +1,47 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
     id("org.springframework.boot") version "2.7.0" // Or the latest version you're using
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-
 }
 
 android {
     namespace 'com.example.opsc7312_wickedtech'
-    compileSdk 33
+    compileSdkVersion 34
 
     defaultConfig {
         applicationId "com.example.opsc7312_wickedtech"
-        minSdk 24
-        targetSdk 33
+        minSdkVersion 21
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    packagingOptions {
+        // Exclude duplicate files
+        resources {
+            excludes += 'META-INF/DEPENDENCIES'
+            excludes += 'META-INF/LICENSE'
+            excludes += 'META-INF/LICENSE.txt'
+            excludes += 'META-INF/LICENSE.md'
+            excludes += 'META-INF/NOTICE'
+            excludes += 'META-INF/NOTICE.md'
+            excludes += 'META-INF/NOTICE.txt'
+            excludes += 'META-INF/web-fragment.xml'
+            excludes += 'META-INF/spring.schemas'
+            excludes += 'META-INF/spring.tooling'
+            excludes += 'notice.txt'
+            excludes += 'META-INF/spring.handlers'
+            excludes += 'META-INF/spring-configuration-metadata.json'
+            excludes += 'META-INF/spring.factories'
+            excludes += 'META-INF/license.txt'
+            excludes += 'license.txt'
+            excludes += 'META-INF/additional-spring-configuration-metadata.json'
+            excludes += 'META-INF/notice.txt'
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -33,34 +55,43 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        viewBinding true
+    viewBinding{
+        enabled = true
     }
 }
 
 dependencies {
-
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'com.google.android.material:material:1.12.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.7'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.7.7'
-    implementation 'androidx.core:core-ktx:+'
-    implementation 'androidx.constraintlayout:constraintlayout-compose:1.0.1'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation 'com.google.android.datatransport:transport-runtime:3.3.0'
+    implementation 'com.google.firebase:protolite-well-known-types:18.0.0'
+    // Updated Navigation component
+    def nav_version = "2.7.0" // Use a stable version
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
-    runtimeOnly("com.h2database:h2")
+    runtimeOnly("com.h2database:h2") // Or your preferred database
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.security:spring-security-test")
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // JSON Web Token (JWT) Library
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5' // If you need JSON parsing support
+
+    // Optionally, if you're using JDK9+ or want enhanced cryptography:
+    implementation 'io.jsonwebtoken:jjwt-gson:0.11.5' // If you prefer Gson over Jackson
 }
