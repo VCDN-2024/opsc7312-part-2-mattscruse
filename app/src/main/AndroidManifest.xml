@@ -12,7 +12,7 @@
         android:theme="@style/Theme.OPSC7312WickedTech"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.OPSC7312WickedTech.NoActionBar">
@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.LoginActivity" />
+<!--        <activity android:name=".Activities.LoginActivity" />-->
         <activity android:name=".Activities.RegisterActivity" />
     </application>
 
