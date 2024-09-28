@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "883076627988",
+    "project_id": "opsc7312-f1b2b",
+    "storage_bucket": "opsc7312-f1b2b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883076627988:android:758672e3a94ca3ca3a3101",
+        "android_client_info": {
+          "package_name": "com.example.opsc7312_wickedtech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883076627988-jce0lkdarfbbeuek17a6v1rh7rg0ijgb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcF-kqIqF1WaS7FY8HjbX05C06QXCRupA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883076627988-jce0lkdarfbbeuek17a6v1rh7rg0ijgb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

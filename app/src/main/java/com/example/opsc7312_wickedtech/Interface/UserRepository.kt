@@ -1,10 +1,27 @@
 package com.example.opsc7312_wickedtech.Interface
 
-import com.example.opsc7312_wickedtech.Models.User
-import org.springframework.data.jpa.repository.JpaRepository
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
-interface UserRepository : JpaRepository<User, Long> {
-    fun findByUsername(username: String): User?
-    fun findByEmail(email: String): User?
+class UserRepository {
+    private val db = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
+    fun saveUserData(userId: String, name: String, email: String) {
+        val user = hashMapOf(
+            "name" to name,
+            "email" to email
+        )
+
+        db.collection("users").document(userId)
+            .set(user)
+            .addOnSuccessListener {
+                println("User data saved successfully")
+            }
+            .addOnFailureListener { e ->
+                println("Error saving user data: $e")
+            }
+    }
+
+    fun getCurrentUser() = auth.currentUser
 }

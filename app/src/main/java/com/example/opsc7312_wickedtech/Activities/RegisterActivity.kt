@@ -1,12 +1,13 @@
 package com.example.opsc7312_wickedtech.Activities
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.provider.ContactsContract.CommonDataKinds.Email
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.opsc7312_wickedtech.Models.RegisterModel
 import com.example.opsc7312_wickedtech.Models.RegisterResponse
 import com.example.opsc7312_wickedtech.R
 import com.example.opsc7312_wickedtech.RetrofitClient
@@ -31,40 +32,43 @@ class RegisterActivity: AppCompatActivity() {
         etConfirmPassword = findViewById(R.id.etConfirmPassword)
         btnRegister = findViewById(R.id.btnRegister)
 
-        // Set click listener for register button
-        btnRegister.setOnClickListener {
-            registerUser()
-        }
+//        // Set click listener for register button
+//        btnRegister.setOnClickListener {
+//            registerUser()
+//        }
 }
-    private fun registerUser() {
-        val username = etUsername.text.toString().trim()
-        val email = etEmail.text.toString().trim()
-        val password = etPassword.text.toString().trim()
-
-        // Validate input
-        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val registerModel = RegisterModel(username, email, password)
-
-        // Make the API call
-        RetrofitClient.apiService.registerUser(registerModel).enqueue(object : Callback<RegisterResponse> {
-            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
-                if (response.isSuccessful) {
-                    Toast.makeText(this@RegisterActivity, "Registration Successful", Toast.LENGTH_SHORT).show()
-                    // Optionally, you can navigate to the login activity after successful registration
-                    // startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
-                    // finish()
-                } else {
-                    Toast.makeText(this@RegisterActivity, "Registration Failed: ${response.message()}", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                Toast.makeText(this@RegisterActivity, "Network Error: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
+//    private fun registerUser() {
+//        val username = etUsername.text.toString().trim()
+//        val email = etEmail.text.toString().trim()
+//        val password = etPassword.text.toString().trim()
+//
+//        // Validate input
+//        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+//            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+//            return
+//        }
+//
+//        val registerModel = RegisterModel(username, email, password)
+//
+//        // Make the API call
+//        RetrofitClient.apiService.registerUser(registerModel).enqueue(object : Callback<RegisterResponse> {
+//            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+//                if (response.isSuccessful) {
+//                    Toast.makeText(this@RegisterActivity, "Registration Successful", Toast.LENGTH_SHORT).show()
+//                    Log.d(TAG,response.message())
+//                    // Optionally, you can navigate to the login activity after successful registration
+//                    // startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+//                    // finish()
+//                } else {
+//                    Toast.makeText(this@RegisterActivity, "Registration Failed: ${response.message()}", Toast.LENGTH_SHORT).show()
+//                    Log.d(TAG,response.message())
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+//                Toast.makeText(this@RegisterActivity, "Network Error: ${t.message}", Toast.LENGTH_SHORT).show()
+//                Log.d(TAG,t.message.toString())
+//            }
+//        })
+//    }
 }
