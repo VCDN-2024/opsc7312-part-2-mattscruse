@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/drawer_layout"
+    android:background="#FFFFFF"
+    tools:context=".ProfileActivity">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="629dp"
+        android:layout_height="706dp"
+        app:srcCompat="@drawable/purple_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="-11dp"
+        android:layout_marginStart="-128dp" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gender"
+        android:textColor="@android:color/black"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/textView29"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="95dp"
+        android:layout_marginStart="50dp"  />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Age"
+        android:textColor="@android:color/black"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/textView29"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="175dp"
+        android:layout_marginStart="50dp"  />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Weight"
+        android:textColor="@android:color/black"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/textView29"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="255dp"
+        android:layout_marginStart="50dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@id/textView29"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="120dp"
+        android:layout_marginStart="50dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter gender here" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@id/textView29"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="200dp"
+        android:layout_marginStart="50dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter age here" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@id/textView29"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="280dp"
+        android:layout_marginStart="50dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter current weight here" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textView28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Height"
+        android:textColor="@android:color/black"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/textView29"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="335dp"
+        android:layout_marginStart="50dp"  />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@id/textView29"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="360dp"
+        android:layout_marginStart="50dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter height here" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="48dp"
+        android:text="Body Information"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="488dp"
+        android:text="Next"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView29" />
+
+    <ImageView
+        android:id="@+id/imageView25"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_button" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<com.google.android.material.navigation.NavigationView
+android:id="@+id/nav_view"
+android:layout_width="wrap_content"
+android:layout_height="match_parent"
+android:layout_gravity="start"
+app:headerLayout="@layout/nav_header_main"
+app:menu="@menu/drawer_menu" />
+    </androidx.drawerlayout.widget.DrawerLayout>

@@ -28,7 +28,7 @@
         </activity>
 
         <activity android:name=".Activities.RegisterActivity" />
-
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".HomeActivity"
             tools:ignore="Instantiatable" />
 

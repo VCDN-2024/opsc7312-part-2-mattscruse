@@ -6,4 +6,11 @@
     <item name="textView15" type="id" />
     <item name="textView16" type="id" />
     <item name="textView17" type="id" />
+    <item name="imageView15" type="id" />
+    <item name="textView25" type="id" />
+    <item name="textView29" type="id" />
+    <item name="textView27" type="id" />
+    <item name="textView28" type="id" />
+    <item name="button9" type="id" />
+    <item name="imageView25" type="id" />
 </resources>
