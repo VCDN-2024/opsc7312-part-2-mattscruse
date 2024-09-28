@@ -11,64 +11,49 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.opsc7312_wickedtech.Models.RegisterResponse
 import com.example.opsc7312_wickedtech.R
 import com.example.opsc7312_wickedtech.RetrofitClient
+import com.example.opsc7312_wickedtech.databinding.ActivityRegisterBinding
+import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class RegisterActivity: AppCompatActivity() {
-    private lateinit var etUsername: EditText
-    private lateinit var  etEmail: EditText
-    private lateinit var etPassword: EditText
-    private lateinit var etConfirmPassword: EditText
-    private lateinit var btnRegister: Button
+
+
+    private lateinit var binding: ActivityRegisterBinding
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        auth = FirebaseAuth.getInstance()
 
-        // Initialize views
-        etUsername = findViewById(R.id.etUsername)
-        etEmail = findViewById(R.id.etEmail)
-        etPassword = findViewById(R.id.etPassword)
-        etConfirmPassword = findViewById(R.id.etConfirmPassword)
-        btnRegister = findViewById(R.id.btnRegister)
+        binding.btnRegister.setOnClickListener {
+            val email = binding.etEmail.text.toString().trim()
+            val password = binding.etPassword.text.toString().trim()
 
-//        // Set click listener for register button
-//        btnRegister.setOnClickListener {
-//            registerUser()
-//        }
-}
-//    private fun registerUser() {
-//        val username = etUsername.text.toString().trim()
-//        val email = etEmail.text.toString().trim()
-//        val password = etPassword.text.toString().trim()
-//
-//        // Validate input
-//        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
-//            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
-//            return
-//        }
-//
-//        val registerModel = RegisterModel(username, email, password)
-//
-//        // Make the API call
-//        RetrofitClient.apiService.registerUser(registerModel).enqueue(object : Callback<RegisterResponse> {
-//            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
-//                if (response.isSuccessful) {
-//                    Toast.makeText(this@RegisterActivity, "Registration Successful", Toast.LENGTH_SHORT).show()
-//                    Log.d(TAG,response.message())
-//                    // Optionally, you can navigate to the login activity after successful registration
-//                    // startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
-//                    // finish()
-//                } else {
-//                    Toast.makeText(this@RegisterActivity, "Registration Failed: ${response.message()}", Toast.LENGTH_SHORT).show()
-//                    Log.d(TAG,response.message())
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-//                Toast.makeText(this@RegisterActivity, "Network Error: ${t.message}", Toast.LENGTH_SHORT).show()
-//                Log.d(TAG,t.message.toString())
-//            }
-//        })
-//    }
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                registerUser(email, password)
+            } else {
+                Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    private fun registerUser(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign up success, update UI with the signed-in user's information
+                    Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
+                    finish() // Go back to LoginActivity
+                } else {
+                    // If sign up fails, display a message to the user.
+                    Toast.makeText(
+                        baseContext, "Registration failed: ${task.exception?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+    }
 }

@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.opsc7312_wickedtech.HomeActivity
 import com.example.opsc7312_wickedtech.Models.LoginResponse
 import com.example.opsc7312_wickedtech.R
 import com.example.opsc7312_wickedtech.RetrofitClient
@@ -50,55 +51,94 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
 
-        // Configure Google Sign In
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
+        // Revert for part 3.
 
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
+//        // Configure Google Sign In
+//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//            .requestIdToken(getString(R.string.default_web_client_id))
+//            .requestEmail()
+//            .build()
+//
+//        googleSignInClient = GoogleSignIn.getClient(this, gso)
+//
+//        binding.googleSignInButton.setOnClickListener {
+//            signIn()
+//        }
+
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        if(currentUser != null){
+            navigateToHome()
+        }
+
 
         binding.googleSignInButton.setOnClickListener {
-            signIn()
+            val email = binding.etUsername.text.toString().trim()
+            val password = binding.etPassword.text.toString().trim()
+
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                loginUser(email, password)
+            } else {
+                Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
+            }
+        }
+        binding.tvRegisterLink.setOnClickListener {
+            // Navigate to RegisterActivity
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
 
 }
-    private fun signIn() {
-        Handler(Looper.getMainLooper()).postDelayed({
-            val signInIntent = googleSignInClient.signInIntent
-            startActivityForResult(signInIntent, RC_SIGN_IN)
-        }, 100)
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-
-        if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                val account = task.getResult(ApiException::class.java)
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
-                firebaseAuthWithGoogle(account.idToken!!)
-            } catch (e: ApiException) {
-                Log.w(TAG, "Google sign in failed", e)
-                Toast.makeText(this, "Google sign in failed: ${e.statusCode}", Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
+    private fun loginUser(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Log.d(TAG, "signInWithCredential:success")
-                    val user = auth.currentUser
-                    Toast.makeText(this, "Signed in as ${user?.displayName}", Toast.LENGTH_SHORT).show()
-                    // TODO: Navigate to main activity
+                    Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                    navigateToHome()
                 } else {
-                    Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    Toast.makeText(this, "Authentication failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(baseContext, "Authentication failed: ${task.exception?.message}",
+                        Toast.LENGTH_SHORT).show()
                 }
             }
+//
+//    private fun signIn() {
+//        Handler(Looper.getMainLooper()).postDelayed({
+//            val signInIntent = googleSignInClient.signInIntent
+//            startActivityForResult(signInIntent, RC_SIGN_IN)
+//        }, 100)
+//    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//
+//        if (requestCode == RC_SIGN_IN) {
+//            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+//            try {
+//                val account = task.getResult(ApiException::class.java)
+//                Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
+//                firebaseAuthWithGoogle(account.idToken!!)
+//            } catch (e: ApiException) {
+//                Log.w(TAG, "Google sign in failed", e)
+//                Toast.makeText(this, "Google sign in failed: ${e.statusCode}", Toast.LENGTH_LONG).show()
+//            }
+//        }
+//    }
+//    private fun firebaseAuthWithGoogle(idToken: String) {
+//        val credential = GoogleAuthProvider.getCredential(idToken, null)
+//        auth.signInWithCredential(credential)
+//            .addOnCompleteListener(this) { task ->
+//                if (task.isSuccessful) {
+//                    Log.d(TAG, "signInWithCredential:success")
+//                    val user = auth.currentUser
+//                    Toast.makeText(this, "Signed in as ${user?.displayName}", Toast.LENGTH_SHORT).show()
+//                    // TODO: Navigate to main activity
+//                } else {
+//                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+//                    Toast.makeText(this, "Authentication failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+//                }
+//            }
         }
-
+    private fun navigateToHome() {
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
+    }
 }
