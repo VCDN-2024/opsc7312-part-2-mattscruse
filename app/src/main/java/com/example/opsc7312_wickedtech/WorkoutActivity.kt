@@ -8,23 +8,31 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.firebase.auth.FirebaseAuth
-import com.example.opsc7312_wickedtech.databinding.ActivityHomeBinding
+import com.example.opsc7312_wickedtech.Activities.LoginActivity
+import com.example.opsc7312_wickedtech.databinding.ActivityWorkoutBinding
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 
-class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private lateinit var binding: ActivityHomeBinding
+class WorkoutActivity :  AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    private lateinit var binding: ActivityWorkoutBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+        binding = ActivityWorkoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
         drawerLayout = binding.drawerLayout
         val user = auth.currentUser
+        // Check if user is null
+        if (user == null) {
+            Toast.makeText(this, "User not logged in. Redirecting to login.", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, LoginActivity::class.java)) // Assuming you have a LoginActivity
+            finish()
+            return
+        }
 
 
 //        setSupportActionBar(binding.toolbar)
@@ -60,13 +68,14 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_questionaire -> {
-                Toast.makeText(this,"Questionaire Clicked",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Questionaire Clicked", Toast.LENGTH_SHORT).show()
             }
 
             R.id.nav_workout -> {
-                Toast.makeText(this, "Workout Clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Workout Clicked", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, WorkoutActivity::class.java))
                 finish()
+
             }
             // Add more cases for other menu items
         }

@@ -31,6 +31,7 @@
         <activity android:name=".SettingsActivity" />
         <activity android:name=".HomeActivity"
             tools:ignore="Instantiatable" />
+        <activity android:name=".WorkoutActivity"/>
 
         <!-- Add this meta-data tag inside the application tag -->
         <meta-data

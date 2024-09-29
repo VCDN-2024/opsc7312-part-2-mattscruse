@@ -16,6 +16,7 @@ interface FirestoreApi {
     @GET("projects/{projectId}/databases/(default)/documents/{collectionId}/{documentId}")
     fun getUserSettings(
         @Path("projectId") projectId: String,
+        @Path("collectionId") collectionId: String,
         @Path("documentId") documentId: String
     ): Call<UserSettings>
 

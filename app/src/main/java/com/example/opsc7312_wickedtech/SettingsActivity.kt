@@ -48,7 +48,7 @@ class SettingsActivity: AppCompatActivity(), NavigationView.OnNavigationItemSele
 
 //        setSupportActionBar(binding.toolbar)
 
-//                fetchUserSettings()
+                fetchUserSettings()
 
 
         // Save settings when the user clicks the save button
@@ -138,26 +138,43 @@ class SettingsActivity: AppCompatActivity(), NavigationView.OnNavigationItemSele
                 R.id.nav_questionaire -> {
                     Toast.makeText(this, "Questionaire Clicked", Toast.LENGTH_SHORT).show()
                 }
+                R.id.nav_workout -> {
+                    Toast.makeText(this, "Workout Clicked", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, WorkoutActivity::class.java))
+                    finish()
+                }
                 // Add more cases for other menu items
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             return true
         }
-//    private fun fetchUserSettings() {
-//        RetrofitClient.instance.getUserSettings("opsc7312-f1b2b", "usersettings",  "n5mXy6mbHFl5szHWAMPq")
-//            .enqueue(object : Callback<UserSettings> {
-//                override fun onResponse(call: Call<UserSettings>, response: Response<UserSettings>) {
-//                    if (response.isSuccessful) {
-//                        val userSettings = response.body()
-//                        // Populate UI with user settings (e.g., gender, age, etc.)
-//                    } else {
-//                        Toast.makeText(this@SettingsActivity, "Failed to fetch settings", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<UserSettings>, t: Throwable) {
-//                    Toast.makeText(this@SettingsActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-//                }
-//            })
-//    }
+    private fun fetchUserSettings() {
+        RetrofitClient.instance.getUserSettings("opsc7312-f1b2b", "usersettings", "n5mXy6mbHFl5szHWAMPq")
+            .enqueue(object : Callback<UserSettings> {
+                override fun onResponse(call: Call<UserSettings>, response: Response<UserSettings>) {
+                    if (response.isSuccessful) {
+                        val userSettings = response.body()
+                        userSettings?.let {
+                            populateUIWithUserSettings(it)
+                        } ?: run {
+                            Toast.makeText(this@SettingsActivity, "No settings found", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(this@SettingsActivity, "Failed to fetch settings", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<UserSettings>, t: Throwable) {
+                    Toast.makeText(this@SettingsActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+
+    private fun populateUIWithUserSettings(settings: UserSettings) {
+        // Populate UI with user settings (e.g., gender, age, etc.)
+        binding.genderInput.setText(settings.fields.gender.stringValue)
+        binding.ageInput.setText(settings.fields.age.integerValue.toString())
+        binding.weightInput.setText(settings.fields.weight.doubleValue.toString())
+        binding.heightInput.setText(settings.fields.height.doubleValue.toString())
+    }
 }
