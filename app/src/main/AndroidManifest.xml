@@ -33,8 +33,8 @@
             tools:ignore="Instantiatable" />
         <activity android:name=".WorkoutActivity"/>
         <activity android:name=".WorkoutListActivity"/>
-        <activity android:name=".Activities.EditExerciseActivity"/>
         <activity android:name=".BMIActivity"/>
+        <activity android:name=".EditExerciseActivity"/>
 
         <!-- Add this meta-data tag inside the application tag -->
         <meta-data

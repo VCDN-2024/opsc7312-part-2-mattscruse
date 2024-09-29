@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <EditText
-        android:id="@+id/exercise_name_edit_text"
+        android:id="@+id/editTextExerciseName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter exercise name"/>
+        android:hint="Exercise Name"
+        android:textSize="18sp"/>
+
+    <EditText
+        android:id="@+id/editTextExerciseDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Exercise Details"
+        android:textSize="18sp"/>
 
     <Button
-        android:id="@+id/save_button"
-        android:layout_width="wrap_content"
+        android:id="@+id/buttonSave"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save"/>
+        android:text="Save"
+        android:layout_marginTop="16dp"/>
 </LinearLayout>

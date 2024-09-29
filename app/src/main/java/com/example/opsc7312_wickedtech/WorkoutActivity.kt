@@ -128,16 +128,30 @@ class WorkoutActivity :  AppCompatActivity(), NavigationView.OnNavigationItemSel
             .get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
-                    val exercises = document.get("exercises") as List<Map<String, String>>
-                    val exerciseList = exercises.map { Exercise(name = it["name"] ?: "") }
-                    // Handle the list of exercises here
-                    // e.g., populate the EditText fields with existing data
-                    if (exerciseList.isNotEmpty()) {
-                        binding.exercise1EditText.setText(exerciseList.getOrNull(0)?.name)
-                        binding.exercise2EditText.setText(exerciseList.getOrNull(1)?.name)
-                        binding.exercise3EditText.setText(exerciseList.getOrNull(2)?.name)
-                        binding.exercise4EditText.setText(exerciseList.getOrNull(3)?.name)
-                        binding.exercise5EditText.setText(exerciseList.getOrNull(4)?.name)
+                    // Get the exercises safely
+                    val exercises = document.get("exercises") as? List<Map<String, Any>> // Change the type to Any
+
+                    if (exercises != null) {
+                        val exerciseList = exercises.map {
+                            Exercise(
+                                name = it["name"] as? String ?: "",
+                                duration = (it["duration"] as? Long)?.toInt() ?: 0,
+                                sets = (it["sets"] as? Long)?.toInt() ?: 0,
+                                reps = (it["reps"] as? Long)?.toInt() ?: 0,
+                                documentId = it["documentId"] as? String ?: ""
+                            )
+                        }
+
+                        // Handle the list of exercises here
+                        if (exerciseList.isNotEmpty()) {
+                            binding.exercise1EditText.setText(exerciseList.getOrNull(0)?.name)
+                            binding.exercise2EditText.setText(exerciseList.getOrNull(1)?.name)
+                            binding.exercise3EditText.setText(exerciseList.getOrNull(2)?.name)
+                            binding.exercise4EditText.setText(exerciseList.getOrNull(3)?.name)
+                            binding.exercise5EditText.setText(exerciseList.getOrNull(4)?.name)
+                        }
+                    } else {
+                        Toast.makeText(this, "Exercises field is missing or incorrectly formatted", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     Toast.makeText(this, "No exercises found", Toast.LENGTH_SHORT).show()
@@ -147,4 +161,5 @@ class WorkoutActivity :  AppCompatActivity(), NavigationView.OnNavigationItemSel
                 Toast.makeText(this, "Error fetching exercises: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
 }

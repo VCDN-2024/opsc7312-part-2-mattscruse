@@ -2,13 +2,13 @@ package com.example.opsc7312_wickedtech
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.opsc7312_wickedtech.Activities.EditExerciseActivity
 import com.example.opsc7312_wickedtech.Adapters.ExerciseAdapter
 import com.example.opsc7312_wickedtech.Models.Exercise
 import com.example.opsc7312_wickedtech.databinding.ActivityWorkoutListBinding
@@ -30,7 +30,7 @@ class WorkoutListActivity : AppCompatActivity(), NavigationView.OnNavigationItem
 
         // Initialize views using binding
         val recyclerView = binding.recyclerView // Use the view binding for RecyclerView
-        binding.drawerLayout // Access drawerLayout through binding
+        drawerLayout = binding.drawerLayout
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         exerciseList = mutableListOf()
@@ -94,10 +94,36 @@ class WorkoutListActivity : AppCompatActivity(), NavigationView.OnNavigationItem
             .get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
-                    val exercises = document.get("exercises") as List<Map<String, String>>
-                    exerciseList.clear()
-                    exerciseList.addAll(exercises.map { Exercise(it["name"] ?: "") })
-                    exerciseAdapter.notifyDataSetChanged()
+                    Log.d("WorkoutListActivity", "Document retrieved: ${document.data}") // Log the entire document
+
+                    // Attempt to get the exercises field
+                    val exercises = document.get("exercises") as? List<Map<String, Any>>
+
+                    // Debugging: Log what was retrieved
+                    Log.d("WorkoutListActivity", "Exercises retrieved: $exercises")
+
+                    if (exercises != null) {
+                        exerciseList.clear() // Clear the list to prevent duplicates
+
+                        if (exercises.isNotEmpty()) {
+                            for (exerciseData in exercises) {
+                                // Safely extract values
+                                val name = exerciseData["name"] as? String ?: "Unknown"
+                                val duration = (exerciseData["duration"] as? Long)?.toInt() ?: 0
+                                val sets = (exerciseData["sets"] as? Long)?.toInt() ?: 0
+                                val reps = (exerciseData["reps"] as? Long)?.toInt() ?: 0
+                                val documentId = exerciseData["documentId"] as? String ?: ""
+
+                                // Add the Exercise object to the list
+                                exerciseList.add(Exercise(name, duration, sets, reps, documentId))
+                            }
+                            exerciseAdapter.notifyDataSetChanged()
+                        } else {
+                            Toast.makeText(this, "No exercises found", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(this, "Exercises field is missing or incorrectly formatted", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
                     Toast.makeText(this, "No exercises found", Toast.LENGTH_SHORT).show()
                 }
@@ -107,10 +133,16 @@ class WorkoutListActivity : AppCompatActivity(), NavigationView.OnNavigationItem
             }
     }
 
+
     private fun editExercise(exercise: Exercise) {
         // Start an edit activity, passing the selected exercise's details
-        val intent = Intent(this, EditExerciseActivity::class.java)
-        intent.putExtra("exercise_name", exercise.name) // Pass the exercise name to the edit activity
+        val intent = Intent(this, EditExerciseActivity::class.java).apply {
+            putExtra("exercise_name", exercise.name)
+            putExtra("exercise_duration", exercise.duration)
+            putExtra("exercise_sets", exercise.sets)
+            putExtra("exercise_reps", exercise.reps)
+            putExtra("document_id", exercise.documentId) // Pass the document ID for updates
+        }
         startActivity(intent)
     }
 }
