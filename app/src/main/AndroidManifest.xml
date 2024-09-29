@@ -34,6 +34,7 @@
         <activity android:name=".WorkoutActivity"/>
         <activity android:name=".WorkoutListActivity"/>
         <activity android:name=".Activities.EditExerciseActivity"/>
+        <activity android:name=".BMIActivity"/>
 
         <!-- Add this meta-data tag inside the application tag -->
         <meta-data

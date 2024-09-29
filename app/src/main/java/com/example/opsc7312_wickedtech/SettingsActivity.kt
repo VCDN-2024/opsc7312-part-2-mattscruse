@@ -132,8 +132,10 @@ class SettingsActivity: AppCompatActivity(), NavigationView.OnNavigationItemSele
             R.id.nav_settings -> {
                 Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show()
             }
-            R.id.nav_questionaire -> {
-                Toast.makeText(this,"Questionaire Clicked",Toast.LENGTH_SHORT).show()
+            R.id.nav_bmi -> {
+                Toast.makeText(this,"BMI Clicked",Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, BMIActivity::class.java))
+                finish()
             }
 
             R.id.nav_workout -> {

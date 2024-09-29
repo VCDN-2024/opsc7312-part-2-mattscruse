@@ -63,23 +63,26 @@ class WorkoutListActivity : AppCompatActivity(), NavigationView.OnNavigationItem
             R.id.nav_settings -> {
                 Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show()
             }
-            R.id.nav_questionaire -> {
-                Toast.makeText(this, "Questionaire Clicked", Toast.LENGTH_SHORT).show()
+            R.id.nav_bmi -> {
+                Toast.makeText(this,"BMI Clicked",Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, BMIActivity::class.java))
+                finish()
             }
+
             R.id.nav_workout -> {
+                Toast.makeText(this, "Workout Clicked", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, WorkoutActivity::class.java))
                 finish()
-                Toast.makeText(this, "Workout Clicked", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_workout_list -> {
+                Toast.makeText(this, "Workout Clicked", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, WorkoutListActivity::class.java))
                 finish()
-                Toast.makeText(this, "Workout List Clicked", Toast.LENGTH_SHORT).show()
             }
 
             // Add more cases for other menu items
         }
-        binding.drawerLayout.closeDrawer(GravityCompat.START) // Use binding to close the drawer
+        drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 

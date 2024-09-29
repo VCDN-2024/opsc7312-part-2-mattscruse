@@ -14,11 +14,11 @@
             android:icon="@drawable/ic_settings"
             android:title="Settings" />
 
-<!--        <item-->
-<!--            android:id="@+id/nav_questionaire"-->
-<!--            android:icon="@drawable/ic_settings"-->
-<!--            android:title="Questionaire"-->
-<!--            />-->
+        <item
+            android:id="@+id/nav_bmi"
+            android:icon="@drawable/ic_settings"
+            android:title="BMI"
+            />
 <item
     android:id="@+id/nav_workout"
     android:icon="@drawable/ic_settings"
