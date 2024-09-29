@@ -52,7 +52,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.makeText(this, "Home clicked", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_profile -> {
-                startActivity(Intent(this, ProfileActivity::class.java))
+                startActivity(Intent(this, SettingsActivity::class.java))
                 finish()
                 Toast.makeText(this, "Profile clicked", Toast.LENGTH_SHORT).show()
             }
