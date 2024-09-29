@@ -9,9 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.opsc7312_wickedtech.Activities.LoginActivity
+import com.example.opsc7312_wickedtech.Models.Exercise
 import com.example.opsc7312_wickedtech.databinding.ActivityWorkoutBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class WorkoutActivity :  AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityWorkoutBinding
@@ -34,9 +36,6 @@ class WorkoutActivity :  AppCompatActivity(), NavigationView.OnNavigationItemSel
             return
         }
 
-
-//        setSupportActionBar(binding.toolbar)
-
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, //, binding.toolbar
             R.string.navigation_drawer_open, R.string.navigation_drawer_close
@@ -46,11 +45,13 @@ class WorkoutActivity :  AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         binding.navView.setNavigationItemSelectedListener(this)
 
-//        binding.logoutButton.setOnClickListener {
-//            auth.signOut()
-//            Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
-//            finish()
-//        }
+        // Set up the click listener for the SAVE button
+        binding.button4.setOnClickListener {
+            saveExercises()
+        }
+        // Call fetchExercises to populate existing exercises if any
+        fetchExercises()
+
     }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -81,5 +82,61 @@ class WorkoutActivity :  AppCompatActivity(), NavigationView.OnNavigationItemSel
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun saveExercises() {
+        val exercises = listOf(
+            Exercise(name = binding.exercise1EditText.text.toString()),
+            Exercise(name = binding.exercise2EditText.text.toString()),
+            Exercise(name = binding.exercise3EditText.text.toString()),
+            Exercise(name = binding.exercise4EditText.text.toString()),
+            Exercise(name = binding.exercise5EditText.text.toString())
+        )
+
+        // Save to Firebase
+        saveToFirebase(exercises)
+    }
+
+    private fun saveToFirebase(exercises: List<Exercise>) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val db = FirebaseFirestore.getInstance()
+
+        // Assuming you want to store the exercises in a collection named "user_exercises"
+        db.collection("user_exercises").document(userId)
+            .set(mapOf("exercises" to exercises))
+            .addOnSuccessListener {
+                Toast.makeText(this, "Exercises saved successfully!", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error saving exercises: ${e.message}", Toast.LENGTH_SHORT)
+                    .show()
+            }
+    }
+    private fun fetchExercises() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("user_exercises").document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val exercises = document.get("exercises") as List<Map<String, String>>
+                    val exerciseList = exercises.map { Exercise(name = it["name"] ?: "") }
+                    // Handle the list of exercises here
+                    // e.g., populate the EditText fields with existing data
+                    if (exerciseList.isNotEmpty()) {
+                        binding.exercise1EditText.setText(exerciseList.getOrNull(0)?.name)
+                        binding.exercise2EditText.setText(exerciseList.getOrNull(1)?.name)
+                        binding.exercise3EditText.setText(exerciseList.getOrNull(2)?.name)
+                        binding.exercise4EditText.setText(exerciseList.getOrNull(3)?.name)
+                        binding.exercise5EditText.setText(exerciseList.getOrNull(4)?.name)
+                    }
+                } else {
+                    Toast.makeText(this, "No exercises found", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error fetching exercises: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 }
