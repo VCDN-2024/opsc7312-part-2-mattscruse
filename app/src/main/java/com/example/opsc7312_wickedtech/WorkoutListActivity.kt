@@ -35,6 +35,14 @@ class WorkoutListActivity : AppCompatActivity(), NavigationView.OnNavigationItem
 
         exerciseList = mutableListOf()
         exerciseAdapter = ExerciseAdapter(exerciseList) { exercise ->
+            val intent = Intent(this, EditExerciseActivity::class.java)
+            intent.putExtra("document_id", exercise.documentId) // Ensure exerciseId is the correct ID from Firestore
+            intent.putExtra("exercise_name", exercise.name)
+            intent.putExtra("exercise_details", exercise.details)
+            intent.putExtra("exercise_duration", exercise.duration)
+            intent.putExtra("exercise_sets", exercise.sets)
+            intent.putExtra("exercise_reps", exercise.reps)
+            startActivity(intent)
             editExercise(exercise) // Handle edit click
         }
 
@@ -42,6 +50,7 @@ class WorkoutListActivity : AppCompatActivity(), NavigationView.OnNavigationItem
 
         // Fetch exercises from Firestore
         fetchExercises()
+
 
         // Setup the NavigationView
         val navView: NavigationView = binding.navView // Access NavigationView through binding
@@ -115,7 +124,7 @@ class WorkoutListActivity : AppCompatActivity(), NavigationView.OnNavigationItem
                                 val documentId = exerciseData["documentId"] as? String ?: ""
 
                                 // Add the Exercise object to the list
-                                exerciseList.add(Exercise(name, duration, sets, reps, documentId))
+                                exerciseList.add(Exercise(name, duration.toString(), sets, reps, documentId))
                             }
                             exerciseAdapter.notifyDataSetChanged()
                         } else {

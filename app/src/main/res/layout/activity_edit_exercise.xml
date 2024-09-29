@@ -20,6 +20,30 @@
         android:hint="Exercise Details"
         android:textSize="18sp"/>
 
+    <EditText
+        android:id="@+id/editTextDuration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Duration (in minutes)"
+        android:inputType="number"
+        android:textSize="18sp"/>
+
+    <EditText
+        android:id="@+id/editTextSets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Number of Sets"
+        android:inputType="number"
+        android:textSize="18sp"/>
+
+    <EditText
+        android:id="@+id/editTextReps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Number of Reps"
+        android:inputType="number"
+        android:textSize="18sp"/>
+
     <Button
         android:id="@+id/buttonSave"
         android:layout_width="match_parent"

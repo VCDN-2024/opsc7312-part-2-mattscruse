@@ -5,6 +5,7 @@ data class UserSettings(
 )
 
 data class Fields(
+    val userid: FirestoreIntegerValue,
     val age: FirestoreIntegerValue,
     val gender: FirestoreStringValue,
     val height: FirestoreDoubleValue,

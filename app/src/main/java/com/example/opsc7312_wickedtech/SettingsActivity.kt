@@ -83,6 +83,7 @@ class SettingsActivity: AppCompatActivity(), NavigationView.OnNavigationItemSele
         // Create a Firestore-compatible object
             val newSettings = UserSettings(
                 fields = Fields(
+                    userid = FirestoreIntegerValue(1),
                     gender = FirestoreStringValue(genderInput),
                     age = FirestoreIntegerValue(ageInput),
                     height = FirestoreDoubleValue(heightInput),

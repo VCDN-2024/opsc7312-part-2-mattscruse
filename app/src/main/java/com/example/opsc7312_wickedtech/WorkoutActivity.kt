@@ -137,7 +137,7 @@ class WorkoutActivity :  AppCompatActivity(), NavigationView.OnNavigationItemSel
                                 name = it["name"] as? String ?: "",
                                 duration = (it["duration"] as? Long)?.toInt() ?: 0,
                                 sets = (it["sets"] as? Long)?.toInt() ?: 0,
-                                reps = (it["reps"] as? Long)?.toInt() ?: 0,
+                                reps = ((it["reps"] as? Long)?.toInt() ?: 0).toString(),
                                 documentId = it["documentId"] as? String ?: ""
                             )
                         }

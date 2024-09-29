@@ -17,6 +17,7 @@ class ExerciseAdapter(
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_exercise, parent, false)
         return ExerciseViewHolder(view)
+
     }
 
     override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int) {
