@@ -68,6 +68,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent(this, WorkoutActivity::class.java))
                 finish()
             }
+            R.id.nav_workout_list -> {
+                Toast.makeText(this, "Workout Clicked", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, WorkoutListActivity::class.java))
+                finish()
+            }
+
             // Add more cases for other menu items
         }
         drawerLayout.closeDrawer(GravityCompat.START)

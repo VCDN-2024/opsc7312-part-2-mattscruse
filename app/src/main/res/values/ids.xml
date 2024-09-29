@@ -13,4 +13,8 @@
     <item name="textView28" type="id" />
     <item name="button9" type="id" />
     <item name="imageView25" type="id" />
+    <item name="exercise_name" type="id" />
+    <item name="nav_workout_list" type="id" />
+    <item name="textViewExerciseDetails" type="id" />
+    <item name="textViewExerciseName" type="id" />
 </resources>

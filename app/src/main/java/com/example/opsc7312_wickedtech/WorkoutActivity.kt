@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.opsc7312_wickedtech.Activities.LoginActivity
+
 import com.example.opsc7312_wickedtech.Models.Exercise
 import com.example.opsc7312_wickedtech.databinding.ActivityWorkoutBinding
 import com.google.android.material.navigation.NavigationView
@@ -69,15 +70,20 @@ class WorkoutActivity :  AppCompatActivity(), NavigationView.OnNavigationItemSel
                 Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_questionaire -> {
-                Toast.makeText(this,"Questionaire Clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Questionaire Clicked",Toast.LENGTH_SHORT).show()
             }
 
             R.id.nav_workout -> {
-                Toast.makeText(this,"Workout Clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Workout Clicked", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, WorkoutActivity::class.java))
                 finish()
-
             }
+            R.id.nav_workout_list -> {
+                Toast.makeText(this, "Workout Clicked", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, WorkoutListActivity::class.java))
+                finish()
+            }
+
             // Add more cases for other menu items
         }
         drawerLayout.closeDrawer(GravityCompat.START)

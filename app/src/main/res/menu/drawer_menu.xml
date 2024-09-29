@@ -14,15 +14,20 @@
             android:icon="@drawable/ic_settings"
             android:title="Settings" />
 
-        <item
-            android:id="@+id/nav_questionaire"
-            android:icon="@drawable/ic_settings"
-            android:title="Questionaire"
-            />
+<!--        <item-->
+<!--            android:id="@+id/nav_questionaire"-->
+<!--            android:icon="@drawable/ic_settings"-->
+<!--            android:title="Questionaire"-->
+<!--            />-->
 <item
     android:id="@+id/nav_workout"
     android:icon="@drawable/ic_settings"
     android:title="Create Workout"/>
+        <item
+            android:id="@+id/nav_workout_list"
+            android:icon="@drawable/ic_settings"
+            android:title="View Workouts"/>
+
 
     </group>
 </menu>
